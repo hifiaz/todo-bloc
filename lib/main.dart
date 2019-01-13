@@ -1,8 +1,11 @@
+import 'package:exampletododevindo/create.dart';
 import 'package:exampletododevindo/src/blocs/todoBloc.dart';
 import 'package:exampletododevindo/src/models/todoModels.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -41,20 +44,28 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: StreamBuilder(
-          stream: bloc.allTodo,
-          builder: (context, AsyncSnapshot<List<Todo>> snapshot) {
-            if (snapshot.hasData) {
-              return buildList(snapshot);
-            } else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            }
-            return Center(child: CircularProgressIndicator());
-          },
-        ));
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: StreamBuilder(
+        stream: bloc.allTodo,
+        builder: (context, AsyncSnapshot<List<Todo>> snapshot) {
+          if (snapshot.hasData) {
+            return buildList(snapshot);
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Create()));
+        },
+        child: Icon(Icons.add),
+      ),
+    );
   }
 
   Widget buildList(AsyncSnapshot<List<Todo>> snapshot) {

@@ -8,7 +8,7 @@ class TodoApiProvider{
   Client client = Client();
   final _url = 'http://localhost:3000/api/';
   Future<List<Todo>> fetchTodoList() async {
-    print('Masuk');
+    print('panggil data');
     final response = await client.get(_url);
     if(response.statusCode == 200){
       // print(response.body.length);
@@ -18,5 +18,16 @@ class TodoApiProvider{
     }else{
       throw Exception('Failed to Load');
     }
+  }
+  Future addTodo(title) async{
+    final response = await client.post("$_url/create", body: {
+      'name' : title
+    });
+    if(response.statusCode == 200){
+      return response;
+    }else{
+      throw Exception('Failed to add data');
+    }
+    
   }
 }
