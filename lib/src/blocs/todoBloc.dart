@@ -6,10 +6,11 @@ class TodoBloc {
   final _repository = Repository();
   final _todoFetcher = PublishSubject<List<Todo>>();
   final _title = BehaviorSubject<String>();
+  final _id = BehaviorSubject<String>();
 
   Observable<List<Todo>> get allTodo => _todoFetcher.stream;
-  // Stream<String> get titleValue => _title.stream;
   Function(String) get updateTitle => _title.sink.add;
+  Function(String) get getId => _id.sink.add;
 
   fetchAllTodo() async {
     List<Todo> todo = await _repository.fetchAllTodo();
@@ -19,10 +20,16 @@ class TodoBloc {
   addSaveTodo() {
     _repository.addSaveTodo(_title.value);
   }
+
+  updateTodo() {
+    print(_id.value);
+    _repository.updateSaveTodo(_id.value);
+  }
   
 
   dispose(){
     _title.close();
+    _id.close();
     _todoFetcher.close();
   }
 }

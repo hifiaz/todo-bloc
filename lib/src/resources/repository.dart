@@ -9,4 +9,5 @@ class Repository{
 
   Future<List<Todo>> fetchAllTodo() => todoApiProvider.fetchTodoList();
   Future addSaveTodo(String title) => todoApiProvider.addTodo(title);
+  Future updateSaveTodo(String ids) => todoApiProvider.updateTodo(ids);
 }

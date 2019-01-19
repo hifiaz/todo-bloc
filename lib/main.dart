@@ -72,8 +72,15 @@ class _MyHomePageState extends State<MyHomePage> {
     return ListView.builder(
         itemCount: snapshot.data.length,
         itemBuilder: (BuildContext context, int index) {
-          return ListTile(
+          return  CheckboxListTile(
+            value: snapshot.data[index].done,
             title: Text(snapshot.data[index].name),
+            // subtitle: Text(snapshot.data[index].id),
+            onChanged: (bool isChecked){
+              bloc.getId(snapshot.data[index].id.toString());
+              bloc.updateTodo();
+              bloc.fetchAllTodo();
+            },
           );
         });
   }
